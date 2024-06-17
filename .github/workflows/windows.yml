@@ -1,0 +1,31 @@
+name: ShutdownAfter Build
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build:
+    runs-on: windows-2019
+
+    steps:
+    - uses: actions/checkout@v4.1.1
+    
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.3.1
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.2.0
+      
+    - name: Restore Packages
+      run: nuget restore ShutdownAfter.sln
+
+    - name: Build Solution
+      run: |
+        msbuild.exe ShutdownAfter.sln -property:Configuration=Release -property:platform="Any CPU"
+
+    - name: Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: "bin/Release/ShutdownAfter.exe"
