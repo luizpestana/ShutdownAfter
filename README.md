@@ -1,6 +1,6 @@
 # ShutdownAfter
 
-Shutdown Windows after a specific window is closed. 
+Shutdown Windows after a specified window is closed. 
 
 It can be useful to shutdown Windows after copying files or folders.
 
